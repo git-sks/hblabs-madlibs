@@ -14,6 +14,8 @@ AWESOMENESS = [
     'smashing', 'lovely',
 ]
 
+player = ""
+
 
 @app.route('/')
 def start_here():
@@ -40,6 +42,21 @@ def greet_person():
     return render_template("compliment.html",
                            person=player,
                            compliment=compliment)
+
+
+@app.route('/game')
+def show_madlib_form():
+    """Display madlib game."""
+
+    # Get player's decision on whether to play
+    will_play = request.args.get("play")
+
+    if will_play == "no":
+        # If player chose no, then load a goodbye page
+        return render_template("goodbye.html")
+    elif will_play == "yes":
+        # Otherwise, player chose yes, and load the game page.
+        return render_template("game.html")
 
 
 if __name__ == '__main__':
